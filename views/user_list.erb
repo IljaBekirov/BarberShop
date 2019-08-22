@@ -1,0 +1,6 @@
+<% @users_file.each_with_index do |line, index| %>
+  <%= index + 1 %>)
+  <%= line %><br>
+<% end %>
+
+<p><%= @users_file.close %></p>
