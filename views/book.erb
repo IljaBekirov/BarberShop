@@ -5,12 +5,10 @@
 
   <div class="form-group">
     <label  id="blue" class="col-sm-6" for="exampleFormControlSelect1">Выбрать парикмахера:</label>
-    <select name="hair_dresser" class="form-control col-sm-6" id="exampleFormControlSelect1">
-      <option>Марина</option>
-      <option>Светлана</option>
-      <option>Анна</option>
-      <option>Виктория</option>
-      <option>Ольга</option>
+    <select name="barber" class="form-control col-sm-6" id="exampleFormControlSelect1">
+      <option <%= @barber == 'Jassie' ? 'selected' : '' %>>Jassie</option>
+      <option <%= @barber == 'Walter' ? 'selected' : '' %>>Walter</option>
+      <option <%= @barber == 'Gus' ? 'selected' : '' %>>Gus</option>
     </select>
   </div>
 

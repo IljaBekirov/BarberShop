@@ -52,7 +52,7 @@ post '/book' do
   @user_name = params[:user_name]
   @phone = params[:phone]
   @date_time = params[:date_time]
-  @hair_dresser = params[:hair_dresser]
+  @barber = params[:barber]
   @color = params[:color]
 
   error_list = {
@@ -68,14 +68,14 @@ post '/book' do
   end
 
   db = SQLite3::Database.new('./db/barbershop')
-  db.execute"INSERT INTO Users (Name, Phone, Datestamp, Barber, Color) VALUES ('user_3', #{@phone}, '17.01', 'Sergey', #{@color})"
+  db.execute"INSERT INTO Users (Name, Phone, Datestamp, Barber, Color) VALUES (#{@user_name}, #{@phone}, #{@date_time},  #{@barber}, #{@color})"
   db.close
 
   # f = File.open('./public/users.txt', 'a')
-  # f.write("User: #{@user_name}, Phone: #{@phone}, Date and Time: #{@date_time}, HairDresser: #{@hair_dresser} \n")
+  # f.write("User: #{@user_name}, Phone: #{@phone}, Date and Time: #{@date_time}, HairDresser: #{@barber} \n")
   # f.close
 
-  erb "Уважаемый #{@user_name}, Вы зарегистрировались на #{@date_time} к мастеру: #{@hair_dresser}. Вы выбрали #{@color} цвет. Спасибо"
+  erb "Уважаемый #{@user_name}, Вы зарегистрировались на #{@date_time} к мастеру: #{@barber}. Вы выбрали #{@color} цвет. Спасибо"
 end
 
 post '/login/attempt' do
