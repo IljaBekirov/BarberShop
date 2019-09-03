@@ -4,9 +4,13 @@ require 'sinatra/reloader'
 require 'pony'
 require 'sqlite3'
 
+def get_db
+  return SQLite3::Database.new('./db/barbershop')
+end
+
 configure do
-  @db = SQLite3::Database.new('./db/barbershop')
-  @db.execute"CREATE TABLE IF NOT EXISTS
+  db = get_db
+  db.execute"CREATE TABLE IF NOT EXISTS
     `Users`
       (
 	      `id`	INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -78,13 +82,8 @@ post '/book' do
     return erb :book
   end
 
-  db = SQLite3::Database.new('./db/barbershop')
-  db.execute"INSERT INTO Users (Name, Phone, Datestamp, Barber, Color) VALUES (#{@user_name}, #{@phone}, #{@date_time},  #{@barber}, #{@color})"
-  db.close
-
-  # f = File.open('./public/users.txt', 'a')
-  # f.write("User: #{@user_name}, Phone: #{@phone}, Date and Time: #{@date_time}, HairDresser: #{@barber} \n")
-  # f.close
+  db = get_db
+  db.execute 'insert into Users (Name, Phone, Datestamp, Barber, Color) values (?, ?, ?, ?, ?)', [@user_name, @phone, @date_time, @barber, @color]
 
   erb "Уважаемый #{@user_name}, Вы зарегистрировались на #{@date_time} к мастеру: #{@barber}. Вы выбрали #{@color} цвет. Спасибо"
 end
@@ -154,12 +153,3 @@ post '/contacts' do
 
   erb "С Вашего электронного адреса: #{@email} отправленно письмо. Спасибо."
 end
-
-# db = SQLite3::Database.new('./db/test_db')
-#
-# # db.execute"INSERT INTO Cars (Name, Price) VALUES ('Jaguar', 7777)"
-# db.execute "SELECT * FROM Cars" do |car|
-#   puts car
-#   puts '===='
-# end
-# db.close
