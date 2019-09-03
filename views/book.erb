@@ -1,6 +1,16 @@
 <h1>Записаться</h1>
 <p id="red">На этой странице Вы можете записаться на стрижку</p>
 
+<script type="text/javascript">
+  $(function () {
+    $('#color').simplecolorpicker();
+    $('#datetimepicker').datetimepicker({
+        format:'d.m.Y H:i'
+    });
+    $.datetimepicker.setLocale('ru');
+  });
+</script>
+
 <form action="/book" method="POST" role="form">
 
   <div class="form-group">
@@ -29,7 +39,7 @@
   <div class="form-group row">
     <label for="date_time" class="col-sm-2 col-form-label">Дата и время:</label>
     <div class="col-sm-4">
-      <input type="text" class="form-control" name="date_time" id="date_time" placeholder="Date and time" value="<%= @date_time %>">
+      <input id="datetimepicker" type="text" class="form-control" name="date_time" placeholder="Date and time" value="<%= @date_time %>">
     </div>
   </div>
 
@@ -63,8 +73,3 @@
 
 </form>
 
-<script type="text/javascript">
-  $(function () {
-    $('#color').simplecolorpicker();
-  });
-</script>
