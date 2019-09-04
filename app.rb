@@ -5,7 +5,9 @@ require 'pony'
 require 'sqlite3'
 
 def get_db
-  return SQLite3::Database.new('./db/barbershop')
+  db = SQLite3::Database.new('./db/barbershop.db')
+  db.results_as_hash = true
+  return db
 end
 
 configure do
@@ -14,11 +16,11 @@ configure do
     `Users`
       (
 	      `id`	INTEGER PRIMARY KEY AUTOINCREMENT,
-        `username`	TEXT,
-        `phone`	TEXT,
-        `datestamp`	TEXT,
-        `barber`	TEXT,
-        `color`	TEXT
+        `Name`	TEXT,
+        `Phone`	TEXT,
+        `Datestamp`	TEXT,
+        `Barber`	TEXT,
+        `Color`	TEXT
       )"
   enable :sessions
 end
@@ -152,4 +154,13 @@ post '/contacts' do
   f.close
 
   erb "С Вашего электронного адреса: #{@email} отправленно письмо. Спасибо."
+end
+
+get '/showusers' do
+  db = get_db
+  db.execute 'select * from Users' do |row|
+    puts row
+    erb "#{row}"
+  end
+  erb :showusers
 end
