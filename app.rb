@@ -110,7 +110,7 @@ post '/book' do
   db = get_db
   db.execute 'insert into Users (Name, Phone, Datestamp, Barber, Color) values (?, ?, ?, ?, ?)', [@user_name, @phone, @date_time, @barber, @color]
 
-  erb "Уважаемый #{@user_name}, Вы зарегистрировались на #{@date_time} к мастеру: #{@barber}. Вы выбрали #{@color} цвет. Спасибо"
+  erb "<h2>Спасибо, Вы записались!</h2>"
 end
 
 post '/login/attempt' do
