@@ -16,9 +16,9 @@
   <div class="form-group">
     <label  id="blue" class="col-sm-6" for="exampleFormControlSelect1">Выбрать парикмахера:</label>
     <select name="barber" class="form-control col-sm-6" id="exampleFormControlSelect1">
-      <option <%= @barber == 'Jassie' ? 'selected' : '' %>>Jassie</option>
-      <option <%= @barber == 'Walter' ? 'selected' : '' %>>Walter</option>
-      <option <%= @barber == 'Gus' ? 'selected' : '' %>>Gus</option>
+      <% @barbers.each do |item| %>
+        <option <%= @barber == item['Name'] ? 'selected' : '' %>><%= item['Name'] %></option>
+      <% end %>
     </select>
   </div>
 

@@ -10,6 +10,21 @@ def get_db
   return db
 end
 
+def seed_db(db, barbers)
+  barbers.each do |barber|
+    db.execute 'insert into Barbers (name) values (?)', [barber] unless is_barber_exist?(db, barber)
+  end
+end
+
+def is_barber_exist?(db, name)
+  db.execute('select * from Barbers where Name=?', [name]).length > 0
+end
+
+before do
+  db = get_db
+  @barbers = db.execute 'select * from Barbers'
+end
+
 configure do
   db = get_db
   db.execute"CREATE TABLE IF NOT EXISTS
@@ -22,6 +37,14 @@ configure do
         `Barber`	TEXT,
         `Color`	TEXT
       )"
+  db.execute"CREATE TABLE IF NOT EXISTS
+    `Barbers`
+      (
+	      `id`	INTEGER PRIMARY KEY AUTOINCREMENT,
+        `Name`	TEXT
+      )"
+
+  seed_db(db, ['Jessie Pinkman', 'Walter White', 'Gus Fring', 'Mike Ehrmantraut'])
   enable :sessions
 end
 
